@@ -1,0 +1,27 @@
+// plugin.c
+#include <stdio.h>
+
+// Runs when the library is loaded
+attribute((constructor))
+static void plugin_init(void) {
+    FILE f = fopen("/tmp/myplugin.log", "a");
+    if (f) {
+        fprintf(f, "myplugin.so loaded\n");
+        fclose(f);
+    }
+}
+
+// Runs when the library is unloaded
+attribute((destructor))
+static void plugin_fini(void) {
+    FILEf = fopen("/tmp/myplugin.log", "a");
+    if (f) {
+        fprintf(f, "myplugin.so unloaded\n");
+        fclose(f);
+    }
+}
+
+// Example exported symbol a host program can call
+int plugin_increment(int x) {
+    return x + 1;
+}
